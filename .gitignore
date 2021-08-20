@@ -30,3 +30,9 @@
 *.exe
 *.out
 *.app
+
+.vs/*
+Shard/Debug/*
+Shard/Release/*
+Shard/x64/*
+x64/*
