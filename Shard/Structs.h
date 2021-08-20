@@ -55,6 +55,13 @@ struct FVector
 	}
 };
 
+
+struct UGameplayStatics_GetPlayerController_Params
+{
+	class UObject* WorldContextObject;
+	int PlayerIndex;
+	class APlayerController* ReturnValue;
+};
 struct FRotator
 {
 
@@ -453,6 +460,22 @@ struct SpawnObjectParams
 	UClass* ObjectClass;
 	UObject* Outer;
 	UObject* ReturnValue;
+};
+
+struct BeginSpawnActorFromClass
+{
+	class UObject* WorldContextObject;
+	class UClass* ActorClass;
+	struct FTransform SpawnTransform;
+	bool bNoCollisionFail;
+	class AActor* Owner;
+	class AActor* ReturnValue;
+};
+struct FinishSpawningActor
+{
+	class AActor* Actor;
+	struct FTransform SpawnTransform;
+	class AActor* ReturnValue;
 };
 
 struct CheatScriptParams
