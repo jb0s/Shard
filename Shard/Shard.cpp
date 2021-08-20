@@ -29,7 +29,7 @@ namespace Shard
                 }
             }
         }
-    }
+        }
 
     void Shard::Initialize()
     {       
