@@ -28,6 +28,9 @@ namespace Shard
                     Console::GrantCheatmanager();
                 }
             }
+            if (GetAsyncKeyState(VK_F5)) {
+                Console::DropLoading();
+            }
         }
         }
 

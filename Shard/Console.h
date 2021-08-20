@@ -47,6 +47,38 @@ namespace Shard
 			ProcessEvent(Globals::GameplayStatics, finishspawningactor, &params2);
 		}
 
+		static void DropLoading() {
+
+			struct UGameplayStatics_GetPlayerController_Params
+			{
+				class UObject* WorldContextObject;                                       // (ConstParm, Parm, ZeroConstructor, IsPlainOldData)
+				int                                                PlayerIndex;                                              // (Parm, ZeroConstructor, IsPlainOldData)
+				class APlayerController* ReturnValue;                                              // (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData)
+			};
+
+			struct UGameplayStatics_GetGameMode_Params
+			{
+				class UObject* WorldContextObject;                                       // (ConstParm, Parm, ZeroConstructor, IsPlainOldData)
+				class AGameModeBase* ReturnValue;                                              // (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData)
+			};
+
+			UGameplayStatics_GetPlayerController_Params params1;
+			UGameplayStatics_GetGameMode_Params params2;
+			params1.PlayerIndex = 0;
+			params1.WorldContextObject = (UObject*)Globals::UWorld;
+			params2.WorldContextObject = (UObject*)Globals::UWorld;
+			auto getplayercontroller = Unreal::FindObjectJake(L"/Script/Engine.GameplayStatics.GetPlayerController");
+			auto serverreadytostartmatch = Unreal::FindObjectJake(L"Function /Script/FortniteGame.FortPlayerController.ServerReadyToStartMatch");
+			auto startmatch = Unreal::FindObjectJake(L"Function /Script/Engine.GameMode.StartMatch");
+			auto getgamemode = Unreal::FindObjectJake(L"Function /Script/Engine.GameplayStatics.GetGameMode");
+
+			ProcessEvent(Globals::GameplayStatics, getplayercontroller, &params1);
+			ProcessEvent((UObject*)params1.ReturnValue, serverreadytostartmatch, nullptr);
+			ProcessEvent(Globals::GameplayStatics, getgamemode, &params2);
+			ProcessEvent((UObject*)params2.ReturnValue, startmatch, nullptr);
+
+		}
+
 		static void GrantCheatmanager()
 		{
 			Logger::Log("Attempting to grant CheatManager");
