@@ -43,6 +43,14 @@ namespace Shard
 
                 ProcessEvent(obj, func, nullptr);
             }
+
+            if (strings[0] == "play") {
+                auto func = Unreal::FindObjectJake(L"Function /Script/MovieScene.MovieSceneSequencePlayer.Play");
+                auto obj = Unreal::FindObjectJake(std::wstring(strings[1].begin(), strings[1].end()));
+
+                ProcessEvent(obj, func, nullptr);
+            }
+
             if (strings[0] == "dump") {
                 CreateThread(0, 0, DumpObjectThread, 0, 0, 0);
             }
