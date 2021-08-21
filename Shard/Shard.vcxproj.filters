@@ -57,6 +57,9 @@
     <ClInclude Include="Unreal.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Patcher.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

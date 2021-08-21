@@ -4,52 +4,13 @@
 #include "Failsafe.h"
 #include "StringUtils.h"
 #include <iostream>  
+#include "Patcher.h"
 
 #include <MinHook.h>
 #pragma comment(lib, "libMinHook.x64.lib")
 
 namespace Shard
 {
-    typedef void* (__fastcall* fExitBypass)(
-        __int64 arg1
-        );
-    fExitBypass ExitBypass;
-
-    void* __fastcall ExitBypassHook( __int64 a1)
-    {
-        /*
-                xor     ecx, ecx
-                mov     [rsp+48h+var_28], rax
-                call    75C7C7B8
-        */
-        return NULL;
-    }
-
-
-
-    typedef void* (__fastcall* fCrashBypass)(
-        __int64 arg1, 
-        __int64 arg2
-        );
-    fCrashBypass CrashBypass;
-
-    void* __fastcall CrashHook(__int64 a1, __int64 a2)
-    {
-        return NULL;
-    }
-
-    typedef void* (__fastcall* fNotiBypass)(
-        wchar_t** arg1,
-        unsigned __int8 arg2,
-        __int64 arg3,
-        char arg4
-        );
-    fNotiBypass NotiBypass;
-
-    void* __fastcall NotificationHook(wchar_t** a1, unsigned __int8 a2, __int64 a3, char a4)
-    {
-        return NULL;
-    }
 
     DWORD WINAPI DumpObjectThread(LPVOID param)
     {
@@ -117,22 +78,8 @@ namespace Shard
         {
             auto processEventOffset = Memory::FindPattern(PROCESS_EVENT);
             auto processEventAddress = processEventOffset + 5 + *reinterpret_cast<int32_t*>(processEventOffset + 1);
-
-
-            auto ExitAddress = Memory::FindPattern(ExitSig);
-            auto NotificationHookAddress = Memory::FindPattern(Notification);
-            auto FNCrashHookAddress = Memory::FindPattern(FNCrashHook);
-            patch();
             MH_Initialize();
-
-
-            /// ONLY ENABLE NOTI HOOK IF U DONT WANNA GO INGAME LOL
-            MH_CreateHook(static_cast<LPVOID>((LPVOID)FNCrashHookAddress), CrashHook, reinterpret_cast<LPVOID*>(&CrashBypass));
-            MH_EnableHook(static_cast<LPVOID>((LPVOID)FNCrashHookAddress));
-            MH_CreateHook(static_cast<LPVOID>((LPVOID)NotificationHookAddress), ExitBypassHook, reinterpret_cast<LPVOID*>(&NotiBypass));
-            MH_EnableHook(static_cast<LPVOID>((LPVOID)NotificationHookAddress));
-            MH_CreateHook(static_cast<LPVOID>((LPVOID)ExitAddress), ExitBypassHook, reinterpret_cast<LPVOID*>(&ExitBypass));
-            MH_EnableHook(static_cast<LPVOID>((LPVOID)ExitAddress));
+            Patcher::patch();
             MH_CreateHook(static_cast<LPVOID>((LPVOID)processEventAddress), ProcessEventHook, reinterpret_cast<LPVOID*>(&ProcessEvent));
             MH_EnableHook(static_cast<LPVOID>((LPVOID)processEventAddress));
         }
