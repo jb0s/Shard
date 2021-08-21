@@ -3,6 +3,7 @@
 #include "Define.h"
 #include "Failsafe.h"
 #include "StringUtils.h"
+#include <iostream>  
 
 #include <MinHook.h>
 #pragma comment(lib, "libMinHook.x64.lib")
@@ -24,6 +25,19 @@ namespace Shard
         return NULL;
     }
 
+
+
+    typedef void* (__fastcall* fCrashBypass)(
+        __int64 arg1, 
+        __int64 arg2
+        );
+    fCrashBypass CrashBypass;
+
+    void* __fastcall CrashHook(__int64 a1, __int64 a2)
+    {
+        return NULL;
+    }
+
     typedef void* (__fastcall* fNotiBypass)(
         wchar_t** arg1,
         unsigned __int8 arg2,
@@ -36,7 +50,6 @@ namespace Shard
     {
         return NULL;
     }
-
 
     DWORD WINAPI DumpObjectThread(LPVOID param)
     {
@@ -108,10 +121,14 @@ namespace Shard
 
             auto ExitAddress = Memory::FindPattern(ExitSig);
             auto NotificationHookAddress = Memory::FindPattern(Notification);
+            auto FNCrashHookAddress = Memory::FindPattern(FNCrashHook);
+            patch();
             MH_Initialize();
 
 
             /// ONLY ENABLE NOTI HOOK IF U DONT WANNA GO INGAME LOL
+            MH_CreateHook(static_cast<LPVOID>((LPVOID)FNCrashHookAddress), CrashHook, reinterpret_cast<LPVOID*>(&CrashBypass));
+            MH_EnableHook(static_cast<LPVOID>((LPVOID)FNCrashHookAddress));
             MH_CreateHook(static_cast<LPVOID>((LPVOID)NotificationHookAddress), ExitBypassHook, reinterpret_cast<LPVOID*>(&NotiBypass));
             MH_EnableHook(static_cast<LPVOID>((LPVOID)NotificationHookAddress));
             MH_CreateHook(static_cast<LPVOID>((LPVOID)ExitAddress), ExitBypassHook, reinterpret_cast<LPVOID*>(&ExitBypass));
