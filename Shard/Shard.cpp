@@ -29,7 +29,6 @@ namespace Shard
                 }
             }
             if (GetAsyncKeyState(VK_F5)) {
-                Console::DropLoading();
             }
         }
         }

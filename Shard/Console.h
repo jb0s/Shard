@@ -5,7 +5,7 @@
 #include "Structs.h"
 
 namespace Shard
-{
+{;
     class Console
     {
 	public:

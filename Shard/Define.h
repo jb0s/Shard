@@ -9,5 +9,6 @@
 #define GENGINE "E8 ? ? ? ? 44 38 35 ? ? ? ? 74 EB"
 #define PROCESS_EVENT_TABLE 0x44
 #define ENGINE_OFFSET 0x965E3E8
+#define Notification "4C 8B DC 55 49 8D AB ? ? ? ? 48 81 EC ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 85 ? ? ? ? 49 89 73 F0"
 
 #define RELATIVE_ADDR(addr, size) ((PBYTE)((UINT_PTR)(addr) + *(PINT)((UINT_PTR)(addr) + ((size) - sizeof(INT))) + (size)))

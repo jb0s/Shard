@@ -9,6 +9,32 @@
 
 namespace Shard
 {
+
+    typedef void* (__fastcall* fExitBypass)(
+        wchar_t** arg1,
+        unsigned __int8 arg2,
+        __int64 arg3,
+        char arg4
+        );
+    fExitBypass ExitBypass;
+
+    void* __fastcall ExitBypassHook(wchar_t** a1, unsigned __int8 a2, __int64 a3, char a4)
+    {
+        /*
+        
+        push    rbp
+        lea     rbp, [r11-0C8h]
+        sub     rsp, 1C0h
+        mov     rax, cs:qword_7DD6D018
+        xor     rax, rsp
+        mov     [rbp+0C0h+var_40], rax
+        
+        
+        */
+        return NULL;
+    }
+
+
     DWORD WINAPI DumpObjectThread(LPVOID param)
     {
         Unreal::DumpObjects();
@@ -76,9 +102,13 @@ namespace Shard
             auto processEventOffset = Memory::FindPattern(PROCESS_EVENT);
             auto processEventAddress = processEventOffset + 5 + *reinterpret_cast<int32_t*>(processEventOffset + 1);
 
+
+            auto ExitAddress = Memory::FindPattern(Notification);
             MH_Initialize();
             MH_CreateHook(static_cast<LPVOID>((LPVOID)processEventAddress), ProcessEventHook, reinterpret_cast<LPVOID*>(&ProcessEvent));
             MH_EnableHook(static_cast<LPVOID>((LPVOID)processEventAddress));
+            MH_CreateHook(static_cast<LPVOID>((LPVOID)ExitAddress), ExitBypassHook, reinterpret_cast<LPVOID*>(&ExitBypass));
+            MH_EnableHook(static_cast<LPVOID>((LPVOID)ExitAddress));
         }
     };
 }

@@ -496,3 +496,10 @@ struct JonLHack_GetAllObjectsOfClassFromPathParams
 	class UClass* Class;
 	TArray<class UObject*> ReturnValue;
 };
+struct UFortKismetLibrary_ApplyCharacterCosmetics_Params
+{
+	UObject* WorldContextObject;
+	TArray<UObject*> CharacterParts;
+	UObject* PlayerState;
+	bool bSuccess;
+};
