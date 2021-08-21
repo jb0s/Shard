@@ -16,6 +16,16 @@ namespace Shard
     class Unreal
     {
 	public:
+		static void Initialize()
+		{
+			Globals::GameplayStatics = FindObjectJake(L"Default__GameplayStatics");
+			Globals::SpawnObject = FindObjectJake(L"/Script/Engine.GameplayStatics.SpawnObject");
+			Globals::CheatManager = FindObjectJake(L"/Script/Engine.CheatManager");
+			Globals::ConsoleClass = FindObjectJake(L"/Script/Engine.Console");
+			Globals::FortGameViewportClient = FindObjectJake(L"/Engine/Transient.FortEngine.FortGameViewportClient");
+			Globals::Say = FindObjectJake(L"Function /Script/Engine.GameMode.Say");
+			Globals::JonLHack = FindObjectJake(L"Function /Script/FortniteGame.FortKismetLibrary.JonLHack_GetAllObjectsOfClassFromPath");
+		}
 		static std::wstring GetObjectName(UObject* Object)
 		{
 			std::wstring sName(L"");

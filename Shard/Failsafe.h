@@ -10,7 +10,7 @@ namespace Shard
     public:
         static bool Verify()
         {
-            Logger::Log("Verifying data.");
+            Logger::Log("Verifying data...");
 
             if (Globals::GameplayStatics == nullptr) {
                 Logger::Log("Verification failed: GameplayStatics is null!");
@@ -41,7 +41,7 @@ namespace Shard
                 return false;
             }
 
-            Logger::Log("No issues detected.");
+            Logger::Log("No issues detected!");
             return true;
         }
     };

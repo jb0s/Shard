@@ -5,6 +5,8 @@
 #include <Psapi.h>
 #include <fstream>
 
+#include "Define.h"
+#include "Globals.h"
 #include "Structs.h"
 
 namespace Shard
@@ -12,7 +14,12 @@ namespace Shard
     class Memory
     {
 	public:
-		static PBYTE PatternScanW(uintptr_t pModuleBaseAddress, const char* sSignature, size_t nSelectResultIndex = 0)
+		static void Initialize()
+		{
+			auto UObjectPtr = Memory::FindPattern(GOBJECTS);
+			Globals::Objects = decltype(Globals::Objects)(RELATIVE_ADDR(UObjectPtr, 7));
+		}
+		static PBYTE FindPattern(uintptr_t pModuleBaseAddress, const char* sSignature, size_t nSelectResultIndex = 0)
 		{
 			static auto patternToByte = [](const char* pattern)
 			{
@@ -79,13 +86,12 @@ namespace Shard
 
 			return NULL;
 		}
-
 		static PBYTE FindPattern(const char* sSignature, size_t nSelectResultIndex = 0)
 		{
 			static MODULEINFO info = { 0 };
 
 			GetModuleInformation(GetCurrentProcess(), GetModuleHandle(0), &info, sizeof(info));
-			return PatternScanW((uintptr_t)info.lpBaseOfDll, sSignature, nSelectResultIndex);
+			return FindPattern((uintptr_t)info.lpBaseOfDll, sSignature, nSelectResultIndex);
 		}
     };
 }

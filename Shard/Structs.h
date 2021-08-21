@@ -1,7 +1,8 @@
 #pragma once
-#include <Windows.h>
+
 #include <vector>
 #include <iostream>
+#include <Windows.h>
 
 #define PI (3.14159265358979323846264338327950288419716939937510)
 #define STR_MERGE_IMPL(a, b) a##b
@@ -55,13 +56,6 @@ struct FVector
 	}
 };
 
-
-struct UGameplayStatics_GetPlayerController_Params
-{
-	class UObject* WorldContextObject;
-	int PlayerIndex;
-	class APlayerController* ReturnValue;
-};
 struct FRotator
 {
 
@@ -462,22 +456,6 @@ struct SpawnObjectParams
 	UObject* ReturnValue;
 };
 
-struct BeginSpawnActorFromClass
-{
-	class UObject* WorldContextObject;
-	class UClass* ActorClass;
-	struct FTransform SpawnTransform;
-	bool bNoCollisionFail;
-	class AActor* Owner;
-	class AActor* ReturnValue;
-};
-struct FinishSpawningActor
-{
-	class AActor* Actor;
-	struct FTransform SpawnTransform;
-	class AActor* ReturnValue;
-};
-
 struct CheatScriptParams
 {
 	struct FString ScriptName;
@@ -496,10 +474,24 @@ struct JonLHack_GetAllObjectsOfClassFromPathParams
 	class UClass* Class;
 	TArray<class UObject*> ReturnValue;
 };
-struct UFortKismetLibrary_ApplyCharacterCosmetics_Params
+
+struct ApplyCharacterCosmeticsParams
 {
 	UObject* WorldContextObject;
 	TArray<UObject*> CharacterParts;
 	UObject* PlayerState;
 	bool bSuccess;
+};
+
+struct GetPlayerControllerParams
+{
+	class UObject* WorldContextObject;
+	int PlayerIndex;
+	class APlayerController* ReturnValue;
+};
+
+struct GetGameModeParams
+{
+	class UObject* WorldContextObject;
+	class AGameModeBase* ReturnValue;
 };

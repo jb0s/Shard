@@ -57,7 +57,10 @@
     <ClInclude Include="Unreal.h">
       <Filter>Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Patcher.h">
+    <ClInclude Include="Fixes.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Fortnite.h">
       <Filter>Modules</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,9 +1,10 @@
 #include "Shard.h"
 
-#include <Windows.h>
-#include <iostream>
 #include <stdio.h>
+#include <iostream>
+#include <Windows.h>
 
+#include "Fixes.h"
 #include "Logger.h"
 #include "Memory.h"
 #include "Unreal.h"
@@ -28,10 +29,8 @@ namespace Shard
                     Console::GrantCheatmanager();
                 }
             }
-            if (GetAsyncKeyState(VK_F5)) {
-            }
         }
-        }
+    }
 
     void Shard::Initialize()
     {       
@@ -41,26 +40,17 @@ namespace Shard
         // Start initialization process
         Startup::Initialize();
         Hook::Initialize();
-
-        // Shit
-        auto UObjectPtr = Memory::FindPattern(GOBJECTS);
-        Globals::Objects = decltype(Globals::Objects)(RELATIVE_ADDR(UObjectPtr, 7));
-
-        Globals::GameplayStatics = Unreal::FindObjectJake(L"Default__GameplayStatics");
-        Globals::SpawnObject = Unreal::FindObjectJake(L"/Script/Engine.GameplayStatics.SpawnObject");
-        Globals::CheatManager = Unreal::FindObjectJake(L"/Script/Engine.CheatManager");
-        Globals::ConsoleClass = Unreal::FindObjectJake(L"/Script/Engine.Console");
-        Globals::FortGameViewportClient = Unreal::FindObjectJake(L"/Engine/Transient.FortEngine.FortGameViewportClient");
-        Globals::Say = Unreal::FindObjectJake(L"Function /Script/Engine.GameMode.Say");
-        Globals::JonLHack = Unreal::FindObjectJake(L"Function /Script/FortniteGame.FortKismetLibrary.JonLHack_GetAllObjectsOfClassFromPath");
+        Memory::Initialize();
+        Unreal::Initialize();
+        Fixes::Initialize();
 
         // Verify if everything went right, if not, immediately stop before damage is done.
         if (!FailsafeUtils::Verify())
             return;
 
+        // Initialize console
         Console::Initialize();
         Console::GrantCheatmanager();
-
         CreateThread(0, 0, Main, 0, 0, 0);
     }
 

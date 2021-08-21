@@ -160,12 +160,13 @@
     <ClInclude Include="Console.h" />
     <ClInclude Include="Define.h" />
     <ClInclude Include="Failsafe.h" />
+    <ClInclude Include="Fortnite.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Hook.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Memory.h" />
-    <ClInclude Include="Patcher.h" />
+    <ClInclude Include="Fixes.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Shard.h" />
     <ClInclude Include="Startup.h" />
