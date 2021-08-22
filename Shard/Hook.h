@@ -3,10 +3,11 @@
 #include "Define.h"
 #include "Failsafe.h"
 #include "StringUtils.h"
-#include <iostream>  
+#include <iostream>
 
 #include <MinHook.h>
 #pragma comment(lib, "libMinHook.x64.lib")
+#define ReadPointer(base, offset) (*(PVOID *)(((PBYTE)base + offset)))
 
 namespace Shard
 {

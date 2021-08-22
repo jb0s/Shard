@@ -11,6 +11,7 @@
 #include "Startup.h"
 #include "Console.h"
 #include "Failsafe.h"
+#include "Fortnite.h"
 
 namespace Shard
 {
@@ -28,6 +29,10 @@ namespace Shard
                 {
                     Console::GrantCheatmanager();
                 }
+            }
+            if (GetAsyncKeyState(VK_F5)) 
+            {
+                Fortnite::DropLoading();
             }
         }
     }

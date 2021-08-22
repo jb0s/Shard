@@ -20,6 +20,7 @@ namespace Fixes
     fRequestExit RequestExitBypass;
     fNotiBypass NotiBypass;
 
+
     // Patches Terminate Process
     void* __fastcall ExitBypassHook(__int64 a1)
     {

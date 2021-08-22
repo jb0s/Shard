@@ -490,8 +490,34 @@ struct GetPlayerControllerParams
 	class APlayerController* ReturnValue;
 };
 
-struct GetGameModeParams
+struct UGameplayStatics_GetGameState_Params
 {
 	class UObject* WorldContextObject;
-	class AGameModeBase* ReturnValue;
+	class AGameStateBase* ReturnValue;
+};
+
+
+enum class EAthenaGamePhase 
+{
+	None = 0,
+	Setup = 1,
+	Warmup = 2,
+	Aircraft = 3,
+	SafeZones = 4,
+	EndGame = 5,
+	Count = 6,
+	EAthenaGamePhase_MAX = 7
+};
+struct FPlaylistPropertyArray
+{
+	char padding[0x0120];
+	UObject* BasePlaylist;
+	UObject* OverridePlaylist;
+};
+
+struct UGameplayStatics_GetPlayerPawn_Params
+{
+	class UObject* WorldContextObject;
+	int PlayerIndex;
+	class APawn* ReturnValue;
 };
