@@ -79,7 +79,6 @@ namespace Shard
         {
             auto processEventOffset = Memory::FindPattern(PROCESS_EVENT);
             auto processEventAddress = processEventOffset + 5 + *reinterpret_cast<int32_t*>(processEventOffset + 1);
-
             MH_Initialize();
             MH_CreateHook(static_cast<LPVOID>((LPVOID)processEventAddress), ProcessEventHook, reinterpret_cast<LPVOID*>(&ProcessEvent));
             MH_EnableHook(static_cast<LPVOID>((LPVOID)processEventAddress));

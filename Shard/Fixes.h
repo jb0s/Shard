@@ -54,6 +54,20 @@ namespace Fixes
         auto FNCrashHookAddress = Shard::Memory::FindPattern(FNCrashHook);
         auto RequestExitAddress = Shard::Memory::FindPattern(RequestExit);
 
+        if (!ExitAddress) {
+            Shard::Logger::Log("ExitAddress Signuature Is Invalid");
+        }
+        if (!NotificationHookAddress) {
+            Shard::Logger::Log("NotificationHookAddress Signuature Is Invalid");
+        }
+        if (!FNCrashHookAddress) {
+            Shard::Logger::Log("FNCrashHookAddress Signuature Is Invalid");
+        }
+        if (!RequestExitAddress) {
+            Shard::Logger::Log("RequestExitAddress Signuature Is Invalid");
+        }
+
+
         MH_CreateHook(static_cast<LPVOID>((LPVOID)RequestExitAddress), RequestExitBypassHook, reinterpret_cast<LPVOID*>(&RequestExitBypass));
         MH_EnableHook(static_cast<LPVOID>((LPVOID)RequestExitAddress));
         MH_CreateHook(static_cast<LPVOID>((LPVOID)FNCrashHookAddress), CrashHook, reinterpret_cast<LPVOID*>(&CrashBypass));
