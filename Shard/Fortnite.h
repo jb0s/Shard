@@ -3,6 +3,7 @@
 #include "Hook.h"
 #include "Unreal.h"
 #include "Structs.h"
+#include "Enums.h"
 
 namespace Shard
 {

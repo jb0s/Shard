@@ -63,6 +63,9 @@
     <ClInclude Include="Fortnite.h">
       <Filter>Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Models</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />

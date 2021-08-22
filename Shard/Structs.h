@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 #include <Windows.h>
+#include "Enums.h"
 
 #define PI (3.14159265358979323846264338327950288419716939937510)
 #define STR_MERGE_IMPL(a, b) a##b
@@ -495,19 +496,6 @@ struct UGameplayStatics_GetGameState_Params
 	class UObject* WorldContextObject;
 	class AGameStateBase* ReturnValue;
 };
-
-
-enum class EAthenaGamePhase 
-{
-	None = 0,
-	Setup = 1,
-	Warmup = 2,
-	Aircraft = 3,
-	SafeZones = 4,
-	EndGame = 5,
-	Count = 6,
-	EAthenaGamePhase_MAX = 7
-};
 struct FPlaylistPropertyArray
 {
 	char padding[0x0120];
@@ -520,4 +508,9 @@ struct UGameplayStatics_GetPlayerPawn_Params
 	class UObject* WorldContextObject;
 	int PlayerIndex;
 	class APawn* ReturnValue;
+};
+
+struct PlayIntroAnim_Params
+{
+	EAthenaGamePhaseStep Step;
 };

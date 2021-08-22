@@ -57,6 +57,7 @@ namespace Shard
             if (strings[0] == "dump") {
                 CreateThread(0, 0, DumpObjectThread, 0, 0, 0);
             }
+
             if (strings[0] == "jonl") {
                 auto path = strings[1]; // folder path
                 auto classPath = strings[2]; // class path

@@ -159,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="Console.h" />
     <ClInclude Include="Define.h" />
+    <ClInclude Include="Enums.h" />
     <ClInclude Include="Failsafe.h" />
     <ClInclude Include="Fortnite.h" />
     <ClInclude Include="framework.h" />
