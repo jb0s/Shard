@@ -11,7 +11,6 @@
 
 namespace Shard
 {
-
     DWORD WINAPI DumpObjectThread(LPVOID param)
     {
         Unreal::DumpObjects();
@@ -53,6 +52,7 @@ namespace Shard
 
                 ProcessEvent(obj, func, nullptr);
             }
+
             if (strings[0] == "dump") {
                 CreateThread(0, 0, DumpObjectThread, 0, 0, 0);
             }

@@ -34,6 +34,10 @@ namespace Shard
             {
                 Fortnite::WidgetSpawner();
             }
+            if (GetAsyncKeyState(VK_F6)) {
+                auto RemoveFromViewport = Unreal::FindObjectJake(L"Function /Script/UMG.UserWidget.RemoveFromViewport");
+                ProcessEvent(Globals::WidgetReturnValue, RemoveFromViewport, nullptr);
+            }
         }
     }
 

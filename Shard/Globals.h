@@ -22,6 +22,7 @@ namespace Shard
         static inline UObject* ConsoleClass;
         static inline UObject* Say;
         static inline UObject* JonLHack;
+        static inline UObject* WidgetReturnValue;
 
         static inline fGetNameByIndex GetNameByIndex;
         static inline fFree Free;
