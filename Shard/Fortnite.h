@@ -3,7 +3,6 @@
 #include "Hook.h"
 #include "Unreal.h"
 #include "Structs.h"
-#include "Enums.h"
 
 namespace Shard
 {
@@ -37,6 +36,16 @@ namespace Shard
 			ProcessEvent((UObject*)ggsParams.ReturnValue, fn, nullptr);
 			ProcessEvent((UObject*)gpcParams.ReturnValue, serverReadyToStartMatch, nullptr);
 			*reinterpret_cast<EAthenaGamePhase*>((uintptr_t)ggsParams.ReturnValue + 0x1e68) = EAthenaGamePhase::Setup;
+		}
+
+		static void WidgetSpawner() {
+			auto widget = Unreal::FindObjectJake(L"WidgetBlueprintGeneratedClass /Game/UI/Frontend/MainMenu/MainMenuButton.MainMenuButton_C");
+			SpawnObjectParams Params{ (UClass*)(widget), (UObject*)(Globals::UWorld) };
+			ProcessEvent(Globals::GameplayStatics, Globals::SpawnObject, &Params);
+			addtoviewport params2;
+			params2.ZOrder = 0;
+			auto addtoviewport = Unreal::FindObjectJake(L"Function /Script/UMG.UserWidget.AddToViewport");
+			ProcessEvent(Params.ReturnValue, addtoviewport, &params2);
 		}
     };
 }

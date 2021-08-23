@@ -32,7 +32,7 @@ namespace Shard
             }
             if (GetAsyncKeyState(VK_F5)) 
             {
-                Fortnite::DropLoading();
+                Fortnite::WidgetSpawner();
             }
         }
     }

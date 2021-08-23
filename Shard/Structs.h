@@ -457,6 +457,10 @@ struct SpawnObjectParams
 	UObject* ReturnValue;
 };
 
+struct addtoviewport {
+	int ZOrder;
+};
+
 struct CheatScriptParams
 {
 	struct FString ScriptName;
