@@ -10,12 +10,17 @@
 #include "Globals.h"
 #include "Structs.h"
 #include "StringUtils.h"
+#include <string>
 
 namespace Shard
 {
     class Unreal
     {
 	public:
+		static UObject* (*SpawnActor)(UObject* UWorld, UClass* Class, FTransform const* UserTransformPtr,
+			const FActorSpawnParameters& SpawnParameters);
+
+
 		static void Initialize()
 		{
 			Globals::GameplayStatics = FindObjectJake(L"Default__GameplayStatics");
@@ -147,6 +152,7 @@ namespace Shard
 					std::string str(name.begin(), name.end());
 
 					log << str + "\n";
+
 				}
 			}
 			return;

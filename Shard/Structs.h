@@ -450,6 +450,8 @@ public:
 	};
 };
 
+
+
 struct SpawnObjectParams
 {
 	UClass* ObjectClass;
@@ -517,4 +519,55 @@ struct UGameplayStatics_GetPlayerPawn_Params
 struct PlayIntroAnim_Params
 {
 	EAthenaGamePhaseStep Step;
+};
+struct FActorSpawnParameters
+{
+	unsigned char Unk00[0x40];
+};
+UObject* (*SpawnActorLong)(UObject* World, UClass* Class, FVector* Location, FRotator* Rotation, FActorSpawnParameters& SpawnParameters);
+
+struct bools
+{
+	unsigned char pad[0x888];
+	char bHasInitiallySpawned : 1; // 0x888(0x01)
+	char bAssignedStartSpawn : 1; // 0x888(0x01)
+	char bReadyToStartMatch : 1; // 0x888(0x01)
+	char bClientPawnIsLoaded : 1; // 0x888(0x01)
+};
+struct FCustomCharacterData {
+	char WasPartReplicatedFlags; // 0x00(0x01)
+	char pad_1[0x3]; // 0x01(0x03)
+	int32_t RequiredVariantPartFlags; // 0x04(0x04)
+	UObject* Parts[0x7]; // 0x08(0x38)
+	 UObject* Charms[0x4]; // 0x40(0x20)
+	TArray<struct UObject*> VariantRequiredCharacterParts; // 0x60(0x10)
+	bool bReplicationFailed; // 0x70(0x01)
+	char pad_71[0x7]; // 0x71(0x07)
+};
+
+struct switchlevel_params {
+	FString URL;
+};
+struct FGuid
+{
+	int A;
+	int B;
+	int C;
+	int D;
+};
+
+struct UFortKismetLibrary_ApplyCharacterCosmetics_Params
+{
+	UObject* WorldContextObject;
+	TArray<UObject*> CharacterParts;
+	UObject* PlayerState;
+	bool bSuccess;
+};
+struct UFortKismetLibrary_UpdatePlayerCustomCharacterPartsVisualization_Params
+{
+	UObject* PlayerState;
+};
+struct AFortPlayerPawnAthena_TeleportToSkyDive_Params
+{
+	float HeightAboveGround;
 };

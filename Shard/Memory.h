@@ -14,6 +14,7 @@ namespace Shard
     class Memory
     {
 	public:
+
 		static void Initialize()
 		{
 			auto UObjectPtr = Memory::FindPattern(GOBJECTS);
