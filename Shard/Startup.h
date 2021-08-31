@@ -19,9 +19,20 @@ namespace Shard
 
             Logger::Log("Initializing globals...");
             Globals::GEngine = reinterpret_cast<cEngine*>(engineOffset);
+            Logger::Log("Found GEngine");
             Globals::UWorld = (cUWorld*)(*(uintptr_t*)worldAddress);
+            Logger::Log("Found UWorld");
             Globals::GetNameByIndex = decltype(Globals::GetNameByIndex)(Memory::FindPattern(GET_NAME_BY_INDEX));
+            Logger::Log("Found Found GetNameByIndex");
             Globals::Free = decltype(Globals::Free)(Memory::FindPattern(FREE));
+            Logger::Log("Found Free Memory");
+
+            if (Globals::processEventOffset) {
+                Logger::Log("Found ProcessEvent");
+            }
+            else if (!Globals::processEventOffset) {
+                Logger::Log("Failed To Find Process event");
+            }
         }
     };
 }

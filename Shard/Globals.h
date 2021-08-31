@@ -12,7 +12,6 @@ namespace Shard
 
         static inline cUWorld* UWorld;
         static inline cEngine* GEngine;
-
         static inline UObject* GameplayStatics;
         static inline UObject* SpawnObject;
         static inline UObject* MakeSelfMoleGhost;
@@ -24,11 +23,10 @@ namespace Shard
         static inline UObject* JonLHack;
         static inline UObject* WidgetReturnValue;
         static inline UObject* PlayerController;
-       static inline uintptr_t AcknowledgedPawn = 0x2a0;
-
+        static inline uintptr_t AcknowledgedPawn = 0x2a0;
+        static inline PBYTE processEventOffset;
         static inline fGetNameByIndex GetNameByIndex;
         static inline fFree Free;
-
         static inline std::wstring ClassToken;
         static inline GObjects* Objects;
     };

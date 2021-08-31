@@ -15,7 +15,6 @@ namespace Shard
 {
 
 
-
     DWORD WINAPI DumpObjectThread(LPVOID param)
     {
         Unreal::DumpObjects();
@@ -28,25 +27,12 @@ namespace Shard
     fProcessEvent ProcessEvent;
     fspawnactor SpawnActor;
 
-
-
-
    static UObject* SpawnActorHook(UObject* InWorld,UClass* Class, FVector* Location, FRotator* Rotation, FActorSpawnParameters& SpawnParameters)
     {
-
        // Scuff Way To get ingame this is a NEED TO FIX!!!
-
-    
-
-    
-    
-   
-   
-   if (Unreal::GetObjectFullName((UObject*)Class).find(L"DefaultPawn") != std::string::npos) {
-           //BlueprintGeneratedClass /Game/Abilities/Player/Pawns/PlayerPawn_Generic.PlayerPawn_Generic_C
+       if (Unreal::GetObjectFullName((UObject*)Class).find(L"DefaultPawn") != std::string::npos) {
            Class = (UClass*)Unreal::FindObjectJake(L"BlueprintGeneratedClass /Game/Abilities/Player/Pawns/PlayerPawn_Generic.PlayerPawn_Generic_C");
        }
-
        if (Unreal::GetObjectFullName((UObject*)Class).find(L"FortPlayerController") != std::string::npos && !((Unreal::GetObjectFullName((UObject*)Class).find(L"Frontend") != std::string::npos) || (Unreal::GetObjectFullName((UObject*)Class).find(L"Zone") != std::string::npos)))
        {
            Class = (UClass*)Unreal::FindObjectJake(L"Class /Script/FortniteGame.FortPlayerControllerZone");
@@ -58,13 +44,6 @@ namespace Shard
        if (Unreal::GetObjectFullName((UObject*)Class).find(L"FortPlayerState") != std::string::npos && !((Unreal::GetObjectFullName((UObject*)Class).find(L"Frontend") != std::string::npos) || (Unreal::GetObjectFullName((UObject*)Class).find(L"Zone") != std::string::npos)))
        {
            Class = (UClass*)Unreal::FindObjectJake(L"Class /Script/FortniteGame.FortPlayerStateZone");
-       }
-       if (GetAsyncKeyState(VK_F10)) {
-           if (Unreal::GetObjectFullName((UObject*)Class).find(L"PlayerPawn_Generic_C") != std::string::npos) {
-               //BlueprintGeneratedClass /Game/Abilities/Player/Pawns/PlayerPawn_Generic.PlayerPawn_Generic_C
-               Class = (UClass*)Unreal::FindObjectJake(L"BlueprintGeneratedClass /Game/Abilities/Player/Pawns/PlayerPawn_Generic.PlayerPawn_Generic_C");
-           }
-
        }
        return SpawnActorLong(InWorld, Class, Location, Rotation, SpawnParameters);
     }
@@ -144,7 +123,6 @@ namespace Shard
         {
             return NULL;
         }
-
         if (fullName.find(L"CheatScript") != std::string::npos)
         {
             auto params = reinterpret_cast<CheatScriptParams*>(pParams);
@@ -158,18 +136,15 @@ namespace Shard
 
                 ProcessEvent(obj, func, nullptr);
             }
-
             if (strings[0] == "play") {
                 auto func = Unreal::FindObjectJake(L"Function /Script/MovieScene.MovieSceneSequencePlayer.Play");
                 auto obj = Unreal::FindObjectJake(std::wstring(strings[1].begin(), strings[1].end()));
 
                 ProcessEvent(obj, func, nullptr);
             }
-
             if (strings[0] == "dump") {
                 CreateThread(0, 0, DumpObjectThread, 0, 0, 0);
             }
-
             if (strings[0] == "test") {
                 auto LocalPawn = ReadPointer(Globals::PlayerController, 0x2A0);
 
@@ -177,7 +152,6 @@ namespace Shard
                 ReviveFromDBNOTime = 0.101;
                 *(float*)((PBYTE)LocalPawn + 0x3490) = 0.101;
             }
-
             if (strings[0] == "jonl") {
                 auto path = strings[1]; // folder path
                 auto classPath = strings[2]; // class path

@@ -253,6 +253,7 @@ public:
 class GObjects
 {
 public:
+
 	inline void NumChunks(int* start, int* end) const
 	{
 		int cStart = 0, cEnd = 0;
