@@ -172,11 +172,10 @@ namespace Shard
         static void Initialize()
         {
             auto processEventOffset = Memory::FindPattern(PROCESS_EVENT);
-            auto processEventAddress = processEventOffset + 5 + *reinterpret_cast<int32_t*>(processEventOffset + 1);
             SpawnActorLong = reinterpret_cast<decltype(SpawnActorLong)>(Memory::FindPattern(SpawnActorSig));
             MH_Initialize();
-            MH_CreateHook(static_cast<LPVOID>((LPVOID)processEventAddress), ProcessEventHook, reinterpret_cast<LPVOID*>(&ProcessEvent));
-            MH_EnableHook(static_cast<LPVOID>((LPVOID)processEventAddress));
+            MH_CreateHook(static_cast<LPVOID>((LPVOID)processEventOffset), ProcessEventHook, reinterpret_cast<LPVOID*>(&ProcessEvent));
+            MH_EnableHook(static_cast<LPVOID>((LPVOID)processEventOffset));
             DetourTransactionBegin(); DetourAttach(&(PVOID&)SpawnActorLong, SpawnActorHook); DetourTransactionCommit();
             
         }
