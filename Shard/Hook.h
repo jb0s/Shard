@@ -247,28 +247,6 @@ namespace Shard
              
              */ 
             }
-
-            if (strings[0] == "startaircraft") {
-                ACharacter_IsInAircraft_Params params;
-
-                auto GInstance = ReadPointer(Globals::UWorld, 0x180);
-                if (!GInstance) printf("GameInstance");
-
-                auto Players = ReadPointer(GInstance, 0x38);
-                if (!Players) printf("Players");
-
-                auto Player = ReadPointer(Players, 0x0); // Gets the first user in the array (LocalPlayers[0]).
-                if (!Player) printf("Player");
-
-                auto PlayerController = ReadPointer(Player, 0x30);
-                if (!PlayerController) printf("PlayerController");
-
-                auto fn = Unreal::FindObjectJake(L"Function /Script/FortniteGame.FortPlayerController.IsInAircraft");
-
-                ProcessEvent((UObject*)PlayerController, fn, &params);
-                std::cout << "IS IN AIRCRAFT:" << params.ReturnValue;
-            }
-
             if (strings[0] == "weapon") {
 
                 std::wstring converted(strings[1].begin(), strings[1].end());
