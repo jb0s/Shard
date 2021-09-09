@@ -24,8 +24,11 @@ namespace Shard
 
     typedef void* (__fastcall* fProcessEvent)(UObject* pObject, UObject* pFunction, void* pParams);
     typedef void* (__fastcall* fspawnactor)(UClass* pClass, FVector pLocation, FRotator pRotation);
-    fProcessEvent ProcessEvent;
+    fProcessEvent ProcessEventHooked;
     fspawnactor SpawnActor;
+
+
+
 
    static UObject* SpawnActorHook(UObject* InWorld,UClass* Class, FVector* Location, FRotator* Rotation, FActorSpawnParameters& SpawnParameters)
     {
@@ -48,6 +51,20 @@ namespace Shard
        return SpawnActorLong(InWorld, Class, Location, Rotation, SpawnParameters);
     }
 
+
+   inline bool ProcessEvent(UObject* pObject, UObject* pFunction, void* pParams) {
+
+       /// Main Process Event
+       /// Why I switched to this?
+       /// Incase the sig changes and I still wanna go ingame this will let me do almost everything without needing to hook shit.
+       /// The Hook is mainly for Cheatscript and on thread getasync keystate etc.
+       /// DO NOT REMOVE THIS!
+       
+       UObject* addr = reinterpret_cast<UObject*>(pObject);
+       auto vtable = *reinterpret_cast<void***>(addr);
+       auto ProcesseventVtable = static_cast<void(*)(void*, void*, void*)>(vtable[0x44]); if (!ProcesseventVtable) return false;
+       ProcesseventVtable((void*)addr, (void*)pFunction, (void*)pParams);
+   }
    static void DropLoading()
    {
        GetPlayerControllerParams gpcParams;
@@ -139,7 +156,7 @@ namespace Shard
                 //  DropLoading();
                 auto switchlevel = Unreal::FindObjectJake(L"Function /Script/Engine.PlayerController.SwitchLevel");
                 switchlevel_params switchparams;
-                switchparams.URL = L"apollo_terrain?game=/Script/FortniteGame.FortGameModeEmptyDedicated";
+                switchparams.URL = L"apollo_papaya?game=/Script/FortniteGame.FortGameModeEmptyDedicated";
                 ProcessEvent(Globals::PlayerController, switchlevel, &switchparams);
             }
         }
@@ -294,7 +311,7 @@ namespace Shard
 
         }
 
-        return ProcessEvent(pObject, pFunction, pParams);
+        return ProcessEventHooked(pObject, pFunction, pParams);
     }
 
     class Hook
@@ -305,8 +322,8 @@ namespace Shard
             auto processEventOffset = Memory::FindPattern(PROCESS_EVENT);
             SpawnActorLong = reinterpret_cast<decltype(SpawnActorLong)>(Memory::FindPattern(SpawnActorSig));
             MH_Initialize();
-            MH_CreateHook(static_cast<LPVOID>((LPVOID)processEventOffset), ProcessEventHook, reinterpret_cast<LPVOID*>(&ProcessEvent));
-            MH_EnableHook(static_cast<LPVOID>((LPVOID)processEventOffset));
+            MH_CreateHook(static_cast<LPVOID>(processEventOffset), ProcessEventHook, reinterpret_cast<LPVOID*>(&ProcessEventHooked));
+            MH_EnableHook(static_cast<LPVOID>(processEventOffset));
             DetourTransactionBegin(); DetourAttach(&(PVOID&)SpawnActorLong, SpawnActorHook); DetourTransactionCommit();
             
         }
