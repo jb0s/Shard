@@ -9,6 +9,22 @@ namespace Shard
     class Fortnite
     {
 	public:
+
+
+
+		static std::string GetBuildVersion()
+		{
+			auto GetGameVersion = Unreal::FindObjectJake(L"Function /Script/FortniteGame.FortRuntimeOptions.GetGameVersion");
+			auto RuntimeOptions = Unreal::FindObjectJake(L"FortRuntimeOptions /Script/FortniteGame.Default__FortRuntimeOptions");
+			auto RuntimeOptionsFunction = Unreal::FindObjectJake(L"Function /Script/FortniteGame.FortRuntimeOptions.GetRuntimeOptions");
+			UObject* RuntimeOptionsReturnValue;
+			FString VersionReturnValue;
+
+			ProcessEvent(RuntimeOptions, RuntimeOptionsFunction, &RuntimeOptionsReturnValue);
+			ProcessEvent(RuntimeOptionsReturnValue, GetGameVersion, &VersionReturnValue);
+ 			return VersionReturnValue.ToString();
+		}
+
 		static void DropLoading()
 		{
 			GetPlayerControllerParams gpcParams;
@@ -39,7 +55,7 @@ namespace Shard
 		}
 
 		static void WidgetSpawner() {
-			auto widget = Unreal::FindObjectJake(L"WidgetBlueprintGeneratedClass /Game/UI/Frontend/MainMenu/MainMenuButton.MainMenuButton_C");
+			auto widget = Unreal::FindObjectJake(L"WidgetBlueprintGeneratedClass /Game/UI/Foundation/Watermark/BuildWatermark.BuildWatermark_C");
 			SpawnObjectParams Params{ (UClass*)(widget), (UObject*)(Globals::UWorld) };
 			ProcessEvent(Globals::GameplayStatics, Globals::SpawnObject, &Params);
 			addtoviewport params2;

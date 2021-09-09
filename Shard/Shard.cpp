@@ -45,12 +45,13 @@ namespace Shard
     {       
         AllocateConsole();
         Logger::Log("Welcome to Shard v1.0.0");
-
         // Start initialization process
         Startup::Initialize();
         Hook::Initialize();
         Memory::Initialize();
         Unreal::Initialize();
+        std::string GameVersion = Fortnite::GetBuildVersion();
+        Logger::Log("Version: " + GameVersion);
         Fixes::Initialize();
 
         // Verify if everything went right, if not, immediately stop before damage is done.

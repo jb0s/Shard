@@ -23,6 +23,7 @@ namespace Shard
         static inline UObject* Say;
         static inline UObject* JonLHack;
         static inline UObject* WidgetReturnValue;
+        static inline std::string* GameVersion;
 
         static inline fGetNameByIndex GetNameByIndex;
         static inline fFree Free;

@@ -89,7 +89,7 @@ namespace Shard
 			std::string classToken = classType.substr(classType.find(classDelimiter), classType.length() - 1);
 			classToken = classToken.substr(0, classToken.find(finalDelimiter));
 
-			Logger::Log("Number is " + classToken.substr(1, classToken.length() - 1));
+			//Logger::Log("Number is " + classToken.substr(1, classToken.length() - 1));
 
 			return std::wstring(classToken.begin(), classToken.end());
 		}
@@ -108,7 +108,7 @@ namespace Shard
 				}
 			}
 
-			std::cout << numName << std::endl;
+			//std::cout << numName << std::endl;
 
 			int count = Globals::Objects->Num();
 			for (int i = 0; i < count; ++i)
