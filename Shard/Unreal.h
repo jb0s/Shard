@@ -11,7 +11,7 @@
 #include "Structs.h"
 #include "StringUtils.h"
 #include <string>
-
+#define ReadPointer(base, offset) (*(PVOID *)(((PBYTE)base + offset)))
 namespace Shard
 {
     class Unreal
@@ -31,6 +31,7 @@ namespace Shard
 			Globals::Say = FindObjectJake(L"Function /Script/Engine.GameMode.Say");
 			Globals::JonLHack = FindObjectJake(L"Function /Script/FortniteGame.FortKismetLibrary.JonLHack_GetAllObjectsOfClassFromPath");
 		}
+
 		static std::wstring GetObjectName(UObject* Object)
 		{
 			std::wstring sName(L"");

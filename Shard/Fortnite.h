@@ -43,16 +43,14 @@ namespace Shard
 			Globals::PlayerController = (UObject*)params.ReturnValue;
 		}
 
-		static UObject* toggledebugcamera() {
+		static UObject* ShowDebug() {
 			struct ExecuteConsoleCommands
 			{
-				class UObject* WorldContextObject;                                       // (Parm, ZeroConstructor, IsPlainOldData)
-				struct FString                                     Command;                                                  // (Parm, ZeroConstructor)
-				class APlayerController* SpecificPlayer;                                           // (Parm, ZeroConstructor, IsPlainOldData)
+				class UObject* WorldContextObject;
+				struct FString Command;
+				class APlayerController* SpecificPlayer;
 			};
-
 			ExecuteConsoleCommands params;
-
 			params.WorldContextObject = reinterpret_cast<UObject*>(Globals::PlayerController);
 			params.Command = L"showdebug";
 			params.SpecificPlayer = reinterpret_cast<APlayerController*>(Globals::PlayerController);
@@ -61,5 +59,39 @@ namespace Shard
 
 			ProcessEvent(kismet, executeconsolecommand, &params);
 		}
+
+		auto SetMovementMode()
+		{
+
+			unsigned char CustomMode;
+
+			auto GInstance = ReadPointer(Globals::UWorld, 0x180);
+			if (!GInstance) printf("GameInstance");
+
+			auto Players = ReadPointer(GInstance, 0x38);
+			if (!Players) printf("Players");
+
+			auto Player = ReadPointer(Players, 0x0); // Gets the first user in the array (LocalPlayers[0]).
+			if (!Player) printf("Player");
+
+			auto PlayerController = ReadPointer(Player, 0x30);
+			if (!PlayerController) printf("PlayerController");
+
+			auto Pawn = ReadPointer(PlayerController, 0x2A0); // Gets the user LocalPawn (Only if in-game).
+			if (!Pawn) printf("Pawn");
+
+			auto Movement = ReadPointer(PlayerController, 0x288);
+			if (!Movement) printf("Movement");
+
+			auto fn = Unreal::FindObjectJake(L"Function /Script/Engine.CharacterMovementComponent.SetMovementMode");
+
+			UCharacterMovementComponent_SetMovementMode_Params params;
+
+			params.NewMovementMode = EMovementMode::MOVE_Flying;
+			params.NewCustomMode = CustomMode;
+
+			ProcessEvent((UObject*) Movement, fn, &params);
+		}
+
     };
 }

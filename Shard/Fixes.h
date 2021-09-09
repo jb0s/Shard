@@ -49,6 +49,7 @@ namespace Fixes
     {
         Shard::Logger::Log("Initializing fixes...");
 
+
         auto ExitAddress = Shard::Memory::FindPattern(ExitSig);
         auto NotificationHookAddress = Shard::Memory::FindPattern(Notification);
         auto FNCrashHookAddress = Shard::Memory::FindPattern(FNCrashHook);

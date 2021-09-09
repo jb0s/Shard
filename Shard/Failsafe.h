@@ -12,6 +12,16 @@ namespace Shard
         {
             Logger::Log("Verifying data...");
 
+
+            if (Globals::UWorld == nullptr) {
+                Logger::Log("Verification failed: UWorld is null!");
+                return false;
+            }
+            if (Globals::GameplayStatics == nullptr) {
+                Logger::Log("Verification failed: GameplayStatics is null!");
+                return false;
+            }
+
             if (Globals::GameplayStatics == nullptr) {
                 Logger::Log("Verification failed: GameplayStatics is null!");
                 return false;
@@ -38,6 +48,10 @@ namespace Shard
             }
             if (Globals::JonLHack == nullptr) {
                 Logger::Log("Verification failed: JonLHack is null!!");
+                return false;
+            }
+            if (Globals::PlayerController == nullptr) {
+                Logger::Log("Verification failed: PlayerController is null!!");
                 return false;
             }
 

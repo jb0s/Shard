@@ -11,6 +11,9 @@
 #define MAKE_PAD(size) STR_MERGE(_pad, __COUNTER__)[size]
 #define DEFINE_MEMBER_N(type, name, offset) struct { unsigned char MAKE_PAD(offset); type name;}
 
+
+
+
 struct FVector2D
 {
 	float X;
@@ -55,6 +58,10 @@ struct FVector
 	{
 		return sqrtf(this->X * this->X + this->Y * this->Y + this->Z * this->Z);
 	}
+};
+struct FText
+{
+	char UnknownData[0x18];
 };
 
 struct FRotator
@@ -571,4 +578,181 @@ struct UFortKismetLibrary_UpdatePlayerCustomCharacterPartsVisualization_Params
 struct AFortPlayerPawnAthena_TeleportToSkyDive_Params
 {
 	float HeightAboveGround;
+};
+struct LoadLevelinstance {
+		UObject* WorldContextObject;
+		FString LevelName;
+		FVector Location;
+		struct FRotator Rotation;
+		bool bOutSuccess;
+		FString OptionalLevelNameOverride;
+};
+
+template <class TEnum>
+class TEnumAsByte
+{
+public:
+	TEnumAsByte()
+	{
+	}
+
+	TEnumAsByte(TEnum _value)
+		: value(static_cast<uint8_t>(_value))
+	{
+	}
+
+	explicit TEnumAsByte(int32_t _value)
+		: value(static_cast<uint8_t>(_value))
+	{
+	}
+
+	explicit TEnumAsByte(uint8_t _value)
+		: value(_value)
+	{
+	}
+
+	operator TEnum() const
+	{
+		return static_cast<TEnum>(value);
+	}
+
+	TEnum GetValue() const
+	{
+		return static_cast<TEnum>(value);
+	}
+
+private:
+	uint8_t value;
+};
+
+
+enum class EFortCustomGender : uint8_t {
+	Invalid,
+	Male,
+	Female,
+	Both,
+	EFortCustomGender_MAX,
+};
+
+enum class EFortCustomBodyType : uint8_t {
+	NONE,
+	Small,
+	Medium,
+	MediumAndSmall,
+	Large,
+	LargeAndSmall,
+	LargeAndMedium,
+	All,
+	Deprecated,
+	EFortCustomBodyType_MAX,
+};
+
+enum class EMontagePlayReturnType : uint8_t {
+	MontageLength,
+	Duration,
+	EMontagePlayReturnType_MAX,
+};
+
+struct UFortMontageItemDefinitionBase_GetAnimationHardReference_Params
+{
+	TEnumAsByte<EFortCustomBodyType> BodyType;
+	TEnumAsByte<EFortCustomGender> Gender;
+	UObject* PawnContext;
+	UObject* ReturnValue;
+};
+
+struct UAnimInstance_Montage_Play_Params
+{
+	UObject* MontageToPlay;
+	float InPlayRate;
+	EMontagePlayReturnType ReturnValueType;
+	float InTimeToStartMontageAt;
+	bool bStopAllMontages;
+	float ReturnValue;
+};
+
+struct USkeletalMeshComponent_GetAnimInstance_Params
+{
+	UObject* ReturnValue;
+};
+
+struct UAnimInstance_GetCurrentActiveMontage_Params
+{
+	UObject* ReturnValue;
+};
+
+
+struct UAnimInstance_Montage_Stop_Params
+{
+	float InBlendOutTime;
+	UObject* Montage;
+};
+
+struct RBitField
+{
+	unsigned char A : 1;
+	unsigned char B : 1;
+	unsigned char C : 1;
+	unsigned char D : 1;
+	unsigned char E : 1;
+	unsigned char F : 1;
+	unsigned char G : 1;
+	unsigned char H : 1;
+};
+
+struct UCharacterMovementComponent_SetMovementMode_Params
+{
+	TEnumAsByte<EMovementMode> NewMovementMode;
+	unsigned char NewCustomMode;
+};
+
+struct FGameplayTag {
+	char pad_59[0x8]; // 0x59(0x07)
+};
+
+struct ACharacter_IsInAircraft_Params
+{
+	bool ReturnValue;
+};
+
+struct FCosmeticVariantInfo {
+	 FGameplayTag VariantChannelTag; // 0x00(0x08)
+	 FGameplayTag ActiveVariantTag; // 0x08(0x08)
+};
+
+
+struct FMcpVariantChannelInfo : FCosmeticVariantInfo {
+	char pad_59[0x20]; // 0x59(0x07)
+	char pad_30[0x8]; // 0x20(0x07)
+	char pad_38[0x10]; // 0x38(0x10)
+};
+
+struct FFortAthenaLoadout {
+	FString BannerIconId; // 0x00(0x10)
+	FString BannerColorId; // 0x10(0x10)
+	UObject* SkyDiveContrail; // 0x20(0x08)
+	 UObject* Glider; // 0x28(0x08)
+	UObject* Pickaxe; // 0x30(0x08)
+	bool bIsDefaultCharacter; // 0x38(0x01)
+	char pad_39[0x7]; // 0x39(0x07)
+	 UObject* Character; // 0x40(0x08)
+	 TArray<struct FMcpVariantChannelInfo> CharacterVariantChannels; // 0x48(0x10)
+	bool bForceUpdateVariants; // 0x58(0x01)
+	char pad_59[0x7]; // 0x59(0x07)
+	 UObject* Hat; // 0x60(0x08)
+	UObject* Backpack; // 0x68(0x08)
+	UObject* LoadingScreen; // 0x70(0x08)
+	 UObject* BattleBus; // 0x78(0x08)
+	UObject* VehicleDecoration; // 0x80(0x08)
+	UObject* CallingCard; // 0x88(0x08)
+	 UObject* MapMarker; // 0x90(0x08)
+	 TArray<struct UObject*> Dances; // 0x98(0x10)
+	 UObject* VictoryPose; // 0xa8(0x08)
+	 UObject* MusicPack; // 0xb0(0x08)
+	 UObject* ItemWrapOverride; // 0xb8(0x08)
+	 TArray<struct UObject*> ItemWraps; // 0xc0(0x10)
+	 UObject* CharmOverride; // 0xd0(0x08)
+	 TArray<struct UObject*> Charms; // 0xd8(0x10)
+	 UObject* PetSkin; // 0xe8(0x08)
+	char pad_F0[0x50]; // 0xf0(0x50)
 };

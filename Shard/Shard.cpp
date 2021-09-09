@@ -30,33 +30,14 @@ namespace Shard
                     Console::GrantCheatmanager();
                 }
             }
-            if (GetAsyncKeyState(VK_F12)) 
-            {
-                DropLoading();
-                UObject* PlayerState = reinterpret_cast<UObject*>(Globals::PlayerController + 0x228); // Class Engine.Controller PlayerState 
-                auto DefaultHead = Unreal::FindObjectJake(L"CustomCharacterPart /Game/Characters/CharacterParts/Female/Medium/Heads/CP_Head_F_RebirthDefaultA.CP_Head_F_RebirthDefaultA");
-                auto defaultbody = Unreal::FindObjectJake(L"CustomCharacterPart /Game/Athena/Heroes/Meshes/Bodies/CP_Body_Commando_F_RebirthDefaultA.CP_Body_Commando_F_RebirthDefaultA");
-                reinterpret_cast<FCustomCharacterData*>(PlayerState + 0x4f0)->Parts[0] = (UObject*) DefaultHead;
-                reinterpret_cast<FCustomCharacterData*>(PlayerState + 0x4f0)->Parts[1] = (UObject*) defaultbody;
-                auto onrepcp = Unreal::FindObjectJake(L"Function /Script/FortniteGame.FortPlayerState.OnRep_CharacterData");
-                ProcessEvent(PlayerState, onrepcp, nullptr);
-            }
-
-
             if (GetAsyncKeyState(VK_F6)) {
 
-                Fortnite::WidgetSpawner();
+               Fortnite::WidgetSpawner();
                /*
                auto RemoveFromViewport = Unreal::FindObjectJake(L"Function /Script/UMG.UserWidget.RemoveFromViewport");
                 ProcessEvent(Globals::WidgetReturnValue, RemoveFromViewport, nullptr);
                
                */ 
-
-                auto LocalPawn = ReadPointer(Globals::PlayerController, 0x2A0);
-
-                auto ReviveFromDBNOTime = *(float*)((PBYTE)LocalPawn + 0x3490);
-                ReviveFromDBNOTime = 0.101;
-                *(float*)((PBYTE)LocalPawn + 0x3490) = 0.101;
             }
         }
     }
