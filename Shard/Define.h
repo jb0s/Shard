@@ -15,5 +15,4 @@
 #define RequestExit "E8 ? ? ? ? 38 1D ? ? ? ? 75 72" // RequestExitWithStatus
 #define SpawnActorSig "48 8B C4 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ? ? ? ? 48 81 EC ? ? ? ? 0F 29 70 A8 0F 29 78 98 44 0F 29 40 ? 44 0F 29 88 ? ? ? ? 44 0F 29 90 ? ? ? ? 44 0F 29 98 ? ? ? ? 44 0F 29 A0 ? ? ? ? 44 0F 29 A8 ? ? ? ? 44 0F 29 B0 ? ? ? ? 44 0F 29 B8 ? ? ? ? 48 8B 05 ? ? ? ? 48 33 C4 48 89 45 70 45 33 ED"
 #define ATHENA_GAMEMODE_CRASH "E8 ? ? ? ? 41 B4 03"
-#define Sprint "88 91 ? ? ? ? 48 85 DB 0F 84"
 #define RELATIVE_ADDR(addr, size) ((PBYTE)((UINT_PTR)(addr) + *(PINT)((UINT_PTR)(addr) + ((size) - sizeof(INT))) + (size)))
