@@ -44,9 +44,9 @@ namespace Fixes
     {
         return NULL;
     }
-
 	static void Initialize() 
     {
+
         Shard::Logger::Log("Initializing fixes...");
 
 

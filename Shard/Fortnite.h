@@ -15,7 +15,6 @@ namespace Shard
 	public:
 
 		static UObject* SpawnActor(UClass* Class, FVector loc, FRotator rot) {
-			SpawnActorLong = reinterpret_cast<decltype(SpawnActorLong)>(Memory::FindPattern(SpawnActorSig));
 			FActorSpawnParameters params{};
 			auto actor = SpawnActorLong(((UObject*)Globals::UWorld), Class, &loc, &rot, params);
 			return actor;
@@ -43,6 +42,7 @@ namespace Shard
 			Globals::PlayerController = (UObject*)params.ReturnValue;
 		}
 
+
 		static UObject* ShowDebug() {
 			struct ExecuteConsoleCommands
 			{
@@ -59,6 +59,64 @@ namespace Shard
 
 			ProcessEvent(kismet, executeconsolecommand, &params);
 		}
+
+		static bool IsSkydiving()
+		{
+			bool ReturnValue;
+			auto iskydiving = Unreal::FindObjectJake(L"Function /Script/FortniteGame.FortPlayerPawn.IsSkydiving");
+			ProcessEvent((UObject*)Globals::UWorld->GameInstance->LocalPlayers[0]->PlayerController->AcknowledgedPawn, iskydiving, &ReturnValue);
+			return ReturnValue;
+		}
+
+		static void TeleportToSkyDive(float InHeight) { auto TeleportToSkyDiveFunc = Unreal::FindObjectJake(L"Function /Script/FortniteGame.FortPlayerPawnAthena.TeleportToSkyDive"); ProcessEvent((UObject*)Globals::UWorld->GameInstance->LocalPlayers[0]->PlayerController->AcknowledgedPawn, TeleportToSkyDiveFunc, &InHeight); }
+
+		static UObject* ExecuteConsoleCommand(FString command) {
+			struct ExecuteConsoleCommands
+			{
+				class UObject* WorldContextObject;
+				struct FString Command;
+				class APlayerController* SpecificPlayer;
+			};
+			ExecuteConsoleCommands params;
+			params.WorldContextObject = reinterpret_cast<UObject*>(Globals::PlayerController);
+			params.Command = command;
+			params.SpecificPlayer = reinterpret_cast<APlayerController*>(Globals::PlayerController);
+			auto executeconsolecommand = Unreal::FindObjectJake(L"Function /Script/Engine.KismetSystemLibrary.ExecuteConsoleCommand");
+			auto kismet = Unreal::FindObjectJake(L"Default__KismetSystemLibrary");
+
+			ProcessEvent(kismet, executeconsolecommand, &params);
+		}
+
+		static void Summon(const char* ClassToSummon)
+		{
+			std::string StrClassToSummon(ClassToSummon);
+			FString FStrClassToSummon = FString(std::wstring(StrClassToSummon.begin(), StrClassToSummon.end()).c_str());
+			auto CheatManager = Unreal::FindObjectJake(L"Class /Script/Engine.CheatManager");
+			auto SummonFunc = Unreal::FindObjectJake(L"Function /Script/Engine.CheatManager.Summon");
+			ProcessEvent(CheatManager, SummonFunc, &FStrClassToSummon);
+		}
+
+		static void Possess(UObject* InController, UObject* InPawn) { auto PossessFunc = Unreal::FindObjectJake(L"Function /Script/Engine.Controller.Possess"); ProcessEvent(InController, PossessFunc, &InPawn); }
+		static void SpawnPawn() {
+
+			auto GInstance = ReadPointer(Globals::UWorld, 0x180);
+			if (!GInstance) printf("GameInstance");
+
+			auto Players = ReadPointer(GInstance, 0x38);
+			if (!Players) printf("Players");
+
+			auto Player = ReadPointer(Players, 0x0); // Gets the first user in the array (LocalPlayers[0]).
+			if (!Player) printf("Player");
+
+			auto PlayerController = ReadPointer(Player, 0x30);
+			if (!PlayerController) printf("PlayerController");
+
+			Summon("PlayerPawn_Athena_C");
+			auto Pawn = Unreal::FindObjectJake(L"BlueprintGeneratedClass /Game/Athena/PlayerPawn_Athena.PlayerPawn_Athena_C");
+
+			//Possess((UObject*)PlayerController, Pawn);
+		}
+
 
 		auto SetMovementMode()
 		{

@@ -383,7 +383,7 @@ class cActor
 public:
 	union
 	{// TrackedNativeGlowFlags 0x01D8
-		DEFINE_MEMBER_N(cWeapon*, CurrentWeapon, 0x600);
+		DEFINE_MEMBER_N(UObject*, PlayerState, 0x240);
 	};
 };
 
@@ -516,6 +516,12 @@ struct FPlaylistPropertyArray
 	UObject* BasePlaylist;
 	UObject* OverridePlaylist;
 };
+
+struct AFortGameStateAthena_OnRep_GamePhase_Params
+{
+	EAthenaGamePhase OldGamePhase;
+};
+
 
 struct UGameplayStatics_GetPlayerPawn_Params
 {
@@ -755,4 +761,8 @@ struct FFortAthenaLoadout {
 	 TArray<struct UObject*> Charms; // 0xd8(0x10)
 	 UObject* PetSkin; // 0xe8(0x08)
 	char pad_F0[0x50]; // 0xf0(0x50)
+};
+
+struct Destroyall_params {
+	UObject* aClass;
 };

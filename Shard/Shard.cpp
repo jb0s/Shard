@@ -17,6 +17,10 @@ namespace Shard
 {
     static HANDLE hConsole;
 
+    bool GrantedCharacterParts = false;
+    bool DestroyedHLODs = false;
+    bool Isskydiving;
+
     DWORD WINAPI Main(LPVOID param)
     {
         while (true)
@@ -30,9 +34,43 @@ namespace Shard
                     Console::GrantCheatmanager();
                 }
             }
+
+            if (ingame == true) {
+
+                if (Globals::UWorld->GameInstance->LocalPlayers[0]->PlayerController)
+                {
+                    if (Globals::UWorld->GameInstance->LocalPlayers[0]->PlayerController->AcknowledgedPawn && GrantedCharacterParts == false)
+                    {
+                        auto KismetLib = Unreal::FindObjectJake(L"FortKismetLibrary /Script/FortniteGame.Default__FortKismetLibrary");
+                        auto fn = Unreal::FindObjectJake(L"Function /Script/FortniteGame.FortKismetLibrary.UpdatePlayerCustomCharacterPartsVisualization");
+
+                        UFortKismetLibrary_UpdatePlayerCustomCharacterPartsVisualization_Params params;
+                        params.PlayerState = (UObject*)Globals::UWorld->GameInstance->LocalPlayers[0]->PlayerController->AcknowledgedPawn->PlayerState;
+
+                        ProcessEvent(KismetLib, fn, &params);
+                        GrantedCharacterParts = true;
+                        if (DestroyedHLODs == false) {
+                            Fortnite::ExecuteConsoleCommand(L"god");
+                            Fortnite::ExecuteConsoleCommand(L"destroyall forthlodsmactor");
+                            Fortnite::ExecuteConsoleCommand(L"bugitgo 0 0 0");
+                            Fortnite::TeleportToSkyDive(1000);
+                           //EquipWeapon(L"");
+                            DestroyedHLODs = true;
+                            bool Isskydiving = Fortnite::IsSkydiving();
+                        }
+                    }
+                }
+
+                if (GetAsyncKeyState(VK_SPACE) && Isskydiving == false) {
+                    auto fn = Unreal::FindObjectJake(L"Function /Script/Engine.Character.Jump");
+
+                    ProcessEvent((UObject*)Globals::UWorld->GameInstance->LocalPlayers[0]->PlayerController->AcknowledgedPawn, fn, nullptr);
+                }
+            }
             if (GetAsyncKeyState(VK_F6)) {
 
-               Fortnite::WidgetSpawner();
+
+               // Showskin();
                /*
                auto RemoveFromViewport = Unreal::FindObjectJake(L"Function /Script/UMG.UserWidget.RemoveFromViewport");
                 ProcessEvent(Globals::WidgetReturnValue, RemoveFromViewport, nullptr);
