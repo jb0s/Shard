@@ -49,7 +49,8 @@ namespace Shard
 
                         ProcessEvent(KismetLib, fn, &params);
                         GrantedCharacterParts = true;
-                        if (DestroyedHLODs == false) {
+                        if (DestroyedHLODs == false) 
+                        {
                             Fortnite::ExecuteConsoleCommand(L"god");
                             Fortnite::ExecuteConsoleCommand(L"destroyall forthlodsmactor");
                             Fortnite::ExecuteConsoleCommand(L"bugitgo 0 0 0");
@@ -61,11 +62,11 @@ namespace Shard
                     }
                 }
 
-                if (GetAsyncKeyState(VK_SPACE) && Isskydiving == false) {
-                    auto fn = Unreal::FindObjectJake(L"Function /Script/Engine.Character.Jump");
-
-                    ProcessEvent((UObject*)Globals::UWorld->GameInstance->LocalPlayers[0]->PlayerController->AcknowledgedPawn, fn, nullptr);
-                }
+                //if (GetAsyncKeyState(VK_SPACE) && Isskydiving == false) {
+                //    static auto fn = Unreal::FindObjectJake(L"Function /Script/Engine.Character.Jump");
+                //
+                //    ProcessEvent((UObject*)Globals::UWorld->GameInstance->LocalPlayers[0]->PlayerController->AcknowledgedPawn, fn, nullptr);
+                //}
             }
             if (GetAsyncKeyState(VK_F6)) {
 

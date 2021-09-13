@@ -29,5 +29,7 @@ namespace Shard
         static inline fFree Free;
         static inline std::wstring ClassToken;
         static inline GObjects* Objects;
+        static inline FActorSpawnParameters* gSpawnParams;
+        static inline UObject* gSpawnActorWorld;
     };
 }

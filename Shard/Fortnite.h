@@ -40,6 +40,7 @@ namespace Shard
 
 			ProcessEvent(GameplayStatics, GetPlayerController, &params);
 			Globals::PlayerController = (UObject*)params.ReturnValue;
+			return (UObject*)params.ReturnValue;
 		}
 
 
@@ -70,7 +71,7 @@ namespace Shard
 
 		static void TeleportToSkyDive(float InHeight) { auto TeleportToSkyDiveFunc = Unreal::FindObjectJake(L"Function /Script/FortniteGame.FortPlayerPawnAthena.TeleportToSkyDive"); ProcessEvent((UObject*)Globals::UWorld->GameInstance->LocalPlayers[0]->PlayerController->AcknowledgedPawn, TeleportToSkyDiveFunc, &InHeight); }
 
-		static UObject* ExecuteConsoleCommand(FString command) {
+		static void ExecuteConsoleCommand(FString command) {
 			struct ExecuteConsoleCommands
 			{
 				class UObject* WorldContextObject;
@@ -111,10 +112,13 @@ namespace Shard
 			auto PlayerController = ReadPointer(Player, 0x30);
 			if (!PlayerController) printf("PlayerController");
 
-			Summon("PlayerPawn_Athena_C");
-			auto Pawn = Unreal::FindObjectJake(L"BlueprintGeneratedClass /Game/Athena/PlayerPawn_Athena.PlayerPawn_Athena_C");
+			//Summon("PlayerPawn_Athena_C");
+			auto PawnClass = (UClass*)Unreal::FindObjectJake(L"BlueprintGeneratedClass /Game/Athena/PlayerPawn_Athena.PlayerPawn_Athena_C");
+			FVector loc{ 0,0,0 };
+			FRotator rot{ 0,0,0 };
+			auto spawnedpawn = SpawnActorLong((UObject*)Globals::UWorld,PawnClass,&loc,&rot,*Globals::gSpawnParams);
 
-			//Possess((UObject*)PlayerController, Pawn);
+			Possess((UObject*)PlayerController, spawnedpawn);
 		}
 
 

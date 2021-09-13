@@ -538,7 +538,7 @@ struct FActorSpawnParameters
 {
 	unsigned char Unk00[0x40];
 };
-UObject* (*SpawnActorLong)(UObject* World, UClass* Class, FVector* Location, FRotator* Rotation, FActorSpawnParameters& SpawnParameters);
+inline UObject* (*SpawnActorLong)(UObject* World, UClass* Class, FVector* Location, FRotator* Rotation, FActorSpawnParameters& SpawnParameters);
 
 struct bools
 {
@@ -761,6 +761,35 @@ struct FFortAthenaLoadout {
 	 TArray<struct UObject*> Charms; // 0xd8(0x10)
 	 UObject* PetSkin; // 0xe8(0x08)
 	char pad_F0[0x50]; // 0xf0(0x50)
+};
+
+// Enum Engine.ESpawnActorCollisionHandlingMethod
+enum class ESpawnActorCollisionHandlingMethod : uint8_t
+{
+	Undefined = 0,
+	AlwaysSpawn = 1,
+	AdjustIfPossibleButAlwaysSpawn = 2,
+	AdjustIfPossibleButDontSpawnIfColliding = 3,
+	DontSpawnIfColliding = 4,
+	ESpawnActorCollisionHandlingMethod_MAX = 5
+};
+
+// Function Engine.GameplayStatics.BeginDeferredActorSpawnFromClass
+struct UGameplayStatics_BeginDeferredActorSpawnFromClass_Params
+{
+	class UObject* WorldContextObject;                                       // (ConstParm, Parm, ZeroConstructor, IsPlainOldData)
+	class UClass* ActorClass;                                               // (Parm, ZeroConstructor, IsPlainOldData)
+	struct FTransform                                  SpawnTransform;                                           // (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData)
+	ESpawnActorCollisionHandlingMethod                 CollisionHandlingOverride;                                // (Parm, ZeroConstructor, IsPlainOldData)
+	class AActor* Owner;                                                    // (Parm, ZeroConstructor, IsPlainOldData)
+	class AActor* ReturnValue;                                              // (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData)
+};
+
+struct UGameplayStatics_FinishSpawningActor_Params
+{
+	class UObject* Actor;                                                    // (Parm, ZeroConstructor, IsPlainOldData)
+	struct FTransform                                  SpawnTransform;                                           // (ConstParm, Parm, OutParm, ReferenceParm, IsPlainOldData)
+	class AActor* ReturnValue;                                              // (Parm, OutParm, ZeroConstructor, ReturnParm, IsPlainOldData)
 };
 
 struct Destroyall_params {
