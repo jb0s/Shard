@@ -151,7 +151,11 @@ namespace Shard
             EAthenaGamePhase_MAX,
         };
         ProcessEvent(Globals::PlayerController, serverReadyToStartMatch, nullptr);
-        *reinterpret_cast<EAthenaGamePhase*>((uintptr_t)ggsParams.ReturnValue + 0x1e68) = EAthenaGamePhase::Warmup;
+        //*reinterpret_cast<EAthenaGamePhase*>((uintptr_t)ggsParams.ReturnValue + 0x1e68) = EAthenaGamePhase::Warmup;
+        //auto gamephaseoffset = Unreal::FindOffset("FortGameStateAthena","GamePhase");
+        //std::cout << "GamePhaseOffset is: " << gamephaseoffset << std::endl;
+        //MessageBox(NULL,L"",L"",0);
+        //*reinterpret_cast<EAthenaGamePhase*>((uintptr_t)ggsParams.ReturnValue + gamephaseoffset) = EAthenaGamePhase::Warmup;
         //0x1e18
         auto CurrentPlaylistInfo = reinterpret_cast<FPlaylistPropertyArray*>((uintptr_t)ggsParams.ReturnValue + 0x1e88);
         auto PlaylistFInder = Unreal::FindObjectJake(L"FortPlaylistAthena /Game/Athena/Playlists/BattleLab/Playlist_BattleLab.Playlist_BattleLab");
@@ -232,7 +236,8 @@ namespace Shard
             {
                 auto switchlevel = Unreal::FindObjectJake(L"Function /Script/Engine.PlayerController.SwitchLevel");
                 switchlevel_params switchparams;
-                switchparams.URL = L"ds_buildergridplane?game=/game/athena/athena_gamemode.athena_gamemode_c";
+                //switchparams.URL = L"ds_buildergridplane?game=/game/athena/athena_gamemode.athena_gamemode_c";
+                switchparams.URL = L"apollo_terrain?game=/game/athena/athena_gamemode.athena_gamemode_c";
                 ProcessEvent(Globals::PlayerController, switchlevel, &switchparams);
                 //auto crashpatchAddress = Memory::FindPattern(ATHENA_GAMEMODE_CRASH);
                 //if (crashpatchAddress)
@@ -269,6 +274,10 @@ namespace Shard
                 //    ProcessEvent(Globals::PlayerController, switchlevel, &switchparams);
                 //}
             }
+            //if (GetAsyncKeyState(VK_F2))
+            //{
+            //    ExecuteCOnsoleComm
+            //}
             if (GetAsyncKeyState(VK_F3)) 
             {
                 //SpawnActorLong = reinterpret_cast<decltype(SpawnActorLong)>(Memory::FindPattern(SpawnActorSig));

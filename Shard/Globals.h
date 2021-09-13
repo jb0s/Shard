@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Structs.h"
+#include "FortUpdater/FortUpdater.h"
 
 namespace Shard
 {
@@ -31,5 +32,6 @@ namespace Shard
         static inline GObjects* Objects;
         static inline FActorSpawnParameters* gSpawnParams;
         static inline UObject* gSpawnActorWorld;
+        static inline FortUpdater* gFortUpdater;
     };
 }

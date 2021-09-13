@@ -51,6 +51,8 @@ namespace Shard
                         GrantedCharacterParts = true;
                         if (DestroyedHLODs == false) 
                         {
+                            Fortnite::ExecuteConsoleCommand(L"startsafezone");
+                            Fortnite::ExecuteConsoleCommand(L"pausesafezone");
                             Fortnite::ExecuteConsoleCommand(L"god");
                             Fortnite::ExecuteConsoleCommand(L"destroyall forthlodsmactor");
                             Fortnite::ExecuteConsoleCommand(L"bugitgo 0 0 0");
@@ -101,6 +103,8 @@ namespace Shard
         // Initialize console
         Console::Initialize();
         Console::GrantCheatmanager();
+        Globals::gFortUpdater = new FortUpdater;
+        Globals::gFortUpdater->Init((uintptr_t)Globals::Objects->ObjectArray, (uintptr_t)Globals::GetNameByIndex, (uintptr_t)Globals::Free);
         CreateThread(0, 0, Main, 0, 0, 0);
     }
 

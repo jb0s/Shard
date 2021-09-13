@@ -66,12 +66,18 @@
     <ClInclude Include="Enums.h">
       <Filter>Models</Filter>
     </ClInclude>
+    <ClInclude Include="FortUpdater\FortUpdater.h">
+      <Filter>Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="Shard.cpp" />
     <ClCompile Include="pch.cpp">
       <Filter>ThirdParty\pch</Filter>
+    </ClCompile>
+    <ClCompile Include="FortUpdater\FortUpdater.cpp">
+      <Filter>Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

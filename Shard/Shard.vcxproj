@@ -162,6 +162,7 @@
     <ClInclude Include="Enums.h" />
     <ClInclude Include="Failsafe.h" />
     <ClInclude Include="Fortnite.h" />
+    <ClInclude Include="FortUpdater\FortUpdater.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Hook.h" />
@@ -178,6 +179,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="FortUpdater\FortUpdater.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
