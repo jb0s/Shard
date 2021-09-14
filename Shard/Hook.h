@@ -321,7 +321,13 @@ namespace Shard
 
                 ProcessEvent(obj, func, nullptr);
             }
-
+            if (strings[0] == "up") {
+                    auto ParamString = strings[1];
+                    float Hight = std::stof(ParamString);
+                    auto TeleportToSkydive = Unreal::FindObjectJake(L"Function /Script/FortniteGame.FortPlayerPawnAthena.TeleportToSkyDive");
+                    ProcessEvent((UObject*)Globals::UWorld->GameInstance->LocalPlayers[0]->PlayerController->AcknowledgedPawn, TeleportToSkydive, &Hight);
+            }
+            
             if (strings[0] == "play") {
                 auto func = Unreal::FindObjectJake(L"Function /Script/MovieScene.MovieSceneSequencePlayer.Play");
                 auto obj = Unreal::FindObjectJake(std::wstring(strings[1].begin(), strings[1].end()));
